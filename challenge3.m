@@ -37,7 +37,6 @@ lenIn = [];
 for index = 1:size(ILeftList,1)
     ImRight = rgb2gray(imread(sprintf('sub/%s',IRightList(index).name)));
     ImLeft = rgb2gray(imread(sprintf('sub/%s',ILeftList(index).name)));
-    % Votre code ici ...
 
     ptsLeft  = detectSURFFeatures(ImLeft, 'MetricThreshold', 1, ...
         'ROI', [1 3*size(ImLeft,1)/4+1 size(ImLeft,2) size(ImLeft,1)/4]);
