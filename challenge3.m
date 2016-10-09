@@ -61,11 +61,11 @@ for index = 1:size(ILeftList,1)
 
     ALeft = ALeft(1:3, :);
 
-    disparite = matchedLeft.Location - matchedRight.Location;
+    disparity = matchedLeft.Location - matchedRight.Location;
 
-    disparite = disparite(:,1)';
+    disparity = disparity(:,1)';
 
-    Az = f * b ./ (disparite);
+    Az = f * b ./ (disparity);
 
     Az = repmat(Az,3,1);
 
