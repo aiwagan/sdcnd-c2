@@ -39,7 +39,15 @@ Image resizing, pickling and steering interpolation is implemented in [thefonsec
 
 ## Data augmentation
 
-Coming soon...
+Generating distorted images:
+```
+import augmentation as aug
+rotation = 0.01 # radians
+shift = 50 # pixels
+distorted = aug.apply_distortion(img, rotation, shift)
+```
+
+See [augmentation.py](https://github.com/wfs/ai-world-car-team-c2/blob/master/thefonseca/augmentation.py) for more details.
 
 ## Model definition and training
 
