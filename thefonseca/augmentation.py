@@ -170,3 +170,48 @@ def apply_distortion(img, rotation=None, shift=None, rotation_mean=0, rotation_s
         plt.imshow(copy)
 
     return copy
+
+
+def get_steer_back_angle(steering_wheel_angle, speed, shift, rotation, steer_back_time = 2., fps = 20,
+                   wheel_base = 2.84988, steering_ratio = 14.8):
+
+    '''
+    Calculate the "steer back" angle, that is, the steering angle that to steer the vehicle back to the desired
+    location and orientation in "steer_back_time" seconds. Useful to calculate the steering labels for distorted images.
+    '''
+
+    dt = (1./fps)
+    shift0 = shift
+    rotation0 = rotation
+    theta = math.pi/2. + rotation
+    # true vehicle velocity
+    v = speed
+    vx = math.cos(theta) * v
+
+    # assume constant acceleration
+    ax = (-shift - vx * steer_back_time) * 2. / (steer_back_time * steer_back_time)
+
+    # calculate velocity x and shift after dt
+    vx = vx + ax * dt
+    shift = shift + vx * dt + ax * dt * dt / 2.
+
+    # steer back angular velocity
+    vtheta = (math.acos(vx / v) - theta) / dt
+
+    # calculate theta after dt
+    #theta = theta + vtheta * dt
+    theta = math.acos(vx / v)
+
+    # true angular velocity
+    vtheta_truth = math.tan(steering_wheel_angle / steering_ratio) * v / wheel_base
+
+    #print(vtheta, vtheta_truth, left_steering.iloc[i].steering_wheel_angle)
+
+    # we have two add "steer back" and true angular velocities to calculate final steering angle
+    vtheta = vtheta + vtheta_truth
+
+    wheel_angle = math.atan(vtheta * wheel_base / v)
+    steer_back_angle = wheel_angle * steering_ratio
+
+    rotation = -(math.pi/2. - theta)
+    return (shift, rotation, steer_back_angle)
