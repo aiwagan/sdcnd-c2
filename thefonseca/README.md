@@ -39,6 +39,13 @@ Image resizing, pickling and steering interpolation is implemented in [thefonsec
 
 ## Data augmentation
 
+Generating random, labeled frames from original frames:
+```python
+import augmentation as aug
+
+transformed_image, new_steering_wheel_angle, rotation, shift = aug.steer_back_distortion(image, steering_wheel_angle, speed)
+```
+
 Generating distorted images:
 ```
 import augmentation as aug
