@@ -43,11 +43,14 @@ Generating random, labeled frames from original frames:
 ```python
 import augmentation as aug
 
-transformed_image, new_steering_wheel_angle, rotation, shift = aug.steer_back_distortion(image, steering_wheel_angle, speed)
+transformed_image, new_steering_wheel_angle, rotation, shift = aug.steer_back_distortion(
+                                                                    image, 
+                                                                    steering_wheel_angle, 
+                                                                    speed)
 ```
 
 Generating distorted images:
-```
+```python
 import augmentation as aug
 rotation = 0.01 # radians
 shift = 50 # pixels
