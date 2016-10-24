@@ -104,8 +104,8 @@ def translation(t):
     return T
 
 
-def apply_distortion(img, rotation, shift, pixel_per_meter=200,
-                     crop_x=50, crop_y=300, draw=False, crop=True):
+def apply_distortion(img, rotation, shift, pixel_per_meter=160,
+                     crop_x=120, crop_y=300, draw=False, crop=True):
 
     '''
     Applies shift and rotation distortion to image, assuming all points below the
@@ -187,7 +187,7 @@ def apply_distortion(img, rotation, shift, pixel_per_meter=200,
     return copy
 
 
-def random_distortion(image, rotation=None, shift=None, rotation_mean=0, rotation_std=0.008,
+def random_distortion(image, rotation=None, shift=None, rotation_mean=0, rotation_std=0.007,
                       shift_mean=0, shift_std=0.3):
     '''
     Applies random shift and rotation distortion to image.
@@ -251,10 +251,11 @@ def get_steer_back_angle(steering_wheel_angle, speed, rotation, shift, steer_bac
     return rotation, shift, steer_back_angle
 
 
-def steer_back_distortion(image, steering_wheel_angle, speed, rotation=None, shift=None):
+
+def steer_back_distortion(image, steering_wheel_angle, speed, rotation=None, shift=None, initial_rotation=0, initial_shift=0):
     ''' Utility function to easily generate new labeled images with random rotation and shift. '''
 
     distorted, rotation, shift = random_distortion(image, rotation=rotation, shift=shift)
-    rotation, shift, steering_wheel_angle = get_steer_back_angle(steering_wheel_angle, speed, rotation, shift)
+    rotation, shift, steering_wheel_angle = get_steer_back_angle(steering_wheel_angle, speed, rotation + initial_rotation, shift + initial_shift)
 
     return distorted, steering_wheel_angle, rotation, shift
