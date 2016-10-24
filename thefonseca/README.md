@@ -53,7 +53,7 @@ Generating distorted images:
 ```python
 import augmentation as aug
 rotation = 0.01 # radians
-shift = 50 # pixels
+shift = 0.5 # meters
 distorted = aug.apply_distortion(img, rotation, shift)
 ```
 
